@@ -1,0 +1,12 @@
+.DS_Store
+
+Chrome/app
+Firefox/data
+
+Safari.safariextension/BrowserWrapper.js
+Safari.safariextension/extension.user.js
+Safari.safariextension/XHR.js
+Safari.safariextension/jquery.min.js
+Safari.safariextension/icon-48.png
+Safari.safariextension/css
+Safari.safariextension/img

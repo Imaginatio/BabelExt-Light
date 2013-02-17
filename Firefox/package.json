@@ -1,9 +1,11 @@
 {
-    "description": "An extension created with BabelExt - www.babelext.com", 
-    "license": "GPL", 
-    "author": "honestbleeps", 
-    "version": "0.9", 
-    "fullName": "BabelExt", 
-    "id": "jid1-h7LuK9FSeAYouw", 
-    "name": "babelext_your_name_here"
+    "description": "Lightweight crossbrowser extension boilerplate",
+    "license": "GPL",
+    "author": "roparz",
+    "icon64": "data/icons/icon64.png",
+    "version": "0.1",
+    "fullName": "BabelExtLight",
+    "icon": "data/icons/icon48.png",
+    "id": "jid1-hKImR1AvMwnlqA",
+    "name": "babel_firefox"
 }

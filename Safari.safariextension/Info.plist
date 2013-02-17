@@ -3,53 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>Author</key>
-	<string>Steve Sobel</string>
+	<string>roparz</string>
 	<key>Builder Version</key>
-	<string>534.55.3</string>
+	<string>8536.26.17</string>
 	<key>CFBundleDisplayName</key>
-	<string>BabelExt Extension</string>
+	<string>BabelExtLight</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.honestbleeps.babelext-extension</string>
+	<string>roparz.babelextlight.safari</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>0.9</string>
+	<string>0.1</string>
 	<key>CFBundleVersion</key>
-	<string>0.9</string>
+	<string>0.1</string>
 	<key>Chrome</key>
 	<dict>
-		<key>Database Quota</key>
-		<real>10485760</real>
 		<key>Global Page</key>
 		<string>background.html</string>
-		<key>Popovers</key>
-		<array>
-			<dict>
-				<key>Filename</key>
-				<string>notification.html</string>
-				<key>Identifier</key>
-				<string>notification</string>
-			</dict>
-		</array>
-		<key>Toolbar Items</key>
-		<array>
-			<dict>
-				<key>Command</key>
-				<string></string>
-				<key>Identifier</key>
-				<string>notificationButton</string>
-				<key>Image</key>
-				<string>notification.png</string>
-				<key>Label</key>
-				<string>Notifications</string>
-				<key>Palette Label</key>
-				<string>Notifications</string>
-				<key>Popover</key>
-				<string>notification</string>
-				<key>Tool Tip</key>
-				<string>Notifications from this BabelExt Extension</string>
-			</dict>
-		</array>
 	</dict>
 	<key>Content</key>
 	<dict>
@@ -57,33 +27,31 @@
 		<dict>
 			<key>End</key>
 			<array>
-				<string>extension.js</string>
+				<string>extension.user.js</string>
 			</array>
 			<key>Start</key>
 			<array>
-				<string>BabelExt.js</string>
+				<string>jquery.min.js</string>
+				<string>XHR.js</string>
+				<string>BrowserWrapper.js</string>
 			</array>
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>An extension created with BabelExt - www.babelext.com</string>
+	<string>Lightweight crossbrowser extension boilerplate</string>
 	<key>ExtensionInfoDictionaryVersion</key>
 	<string>1.0</string>
 	<key>Permissions</key>
 	<dict>
 		<key>Website Access</key>
 		<dict>
-			<key>Allowed Domains</key>
-			<array>
-				<string>babelext.com</string>
-			</array>
 			<key>Include Secure Pages</key>
 			<true/>
 			<key>Level</key>
-			<string>Some</string>
+			<string>All</string>
 		</dict>
 	</dict>
 	<key>Website</key>
-	<string>http://babelext.com</string>
+	<string>http://github.com/roparz/BabelExt-Light</string>
 </dict>
 </plist>
