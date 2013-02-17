@@ -1,4 +1,4 @@
-### What is BabelExtLight? ###
+## What is BabelExtLight? ##
 
 BabelExtLight is a lightweight crossbrowser extension boilerplate for the following browsers:
 
@@ -15,9 +15,7 @@ BabelExtLight is suited for developers wanting to create "content enhancement" e
 
 ### What does BabelExtLight do to help me? ###
 
-BabelExtLight will help you to make cross domain http requests (CORS) avoiding crossbrowsers issues
-and will help you to add stylesheets to the page (some browsers need you to add !important to each lines
-to be considered).
+BabelExtLight will help you to make cross domain http requests (CORS) avoiding crossbrowsers issues and will help you to add stylesheets to the page (some browsers need you to add !important to each lines to be considered).
 
 ### Great, now how do I get started? ###
 
@@ -27,10 +25,15 @@ Lauch the init.sh shell script. This will:
 
 - copy the common folder content to Chrome/app folder.
 - symlink the common folder with the Firefox/data folder.
-- link some common folder files into the Safari.safariextension folder.
+- link some files into the Safari.safariextension folder.
 
-That's all folks. You can now try the extension in all supported browsers.
-This will add a simple message ("This is BabelExtLight made by roparz") a the bottom left of all web pages.
+That's all folks. You can now try the extension in all supported browsers. This will add a simple message ("This is BabelExtLight made by roparz") a the bottom left of all web pages.
+
+### Instructions before making your own extension ###
+
+XHR: get inspiration from the common/extension.user.js to see how you can use XHR.
+
+Styles: go to Firefox/lib/main.js and the "contentStyleFiles" block to see how you can add stylesheet to Firefox extension. Just add the stylesheets you want in the "styles" array of the Safari/background.js file for Safari extension.
 
 ## Instructions for loading/testing an extension in each browser ##
 
@@ -88,5 +91,7 @@ This will add a simple message ("This is BabelExtLight made by roparz") a the bo
 ## Instructions for automaticaly build your extension for each browsers ##
 
 Read the build.sh content file. Install all tools you need (cfx for Firefox, crxmake for Chrome and xar for Safari).
+
 You need to follow some instructions before building Safari extension [http://blog.streak.com/2013/01/how-to-build-safari-extension.html](http://blog.streak.com/2013/01/how-to-build-safari-extension.html).
+
 Finally just lauch the build.sh shell script.
