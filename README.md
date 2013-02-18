@@ -7,7 +7,7 @@ BabelExtLight is a lightweight crossbrowser extension boilerplate for the follow
 - Opera (not supported yet)
 - Safari
 
-BabelExtLight is inspired from the original project [https://github.com/honestbleeps/BabelExt](BabelExt)
+BabelExtLight is inspired from the original project [BabelExt](https://github.com/honestbleeps/BabelExt)
 
 ### Who is BabelExtLight for? ###
 
