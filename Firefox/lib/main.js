@@ -16,14 +16,18 @@
 	function appendStylesheets(worker) {
 		var i = 0, len = contentStyleFiles.length;
 		for (; i < len; i++) {
-			worker.postMessage({ 'name': 'appendStylesheet', 'href': contentStyleFiles[i] });
+			worker.postMessage({
+				'name': 'appendStylesheet',
+				'href': contentStyleFiles[i]
+			});
 		}
 	}
 
 	function callCallback(worker, obj) {
 		obj.name = 'callCallback';
-		if (obj.callbackID !== undefined)
+		if (obj.callbackID !== undefined) {
 			worker.postMessage(obj);
+		}
 	}
 
 
@@ -48,11 +52,11 @@
 		worker.on('message', function(event) {
 			if (event.name === 'xmlhttpRequest') {
 				xmlhttpRequest(worker, event);
-
 			} else if (event.name === 'extensionReady') {
 				appendStylesheets(worker);
-				callCallback(worker, { 'callbackID': event.callbackID });
-
+				callCallback(worker, {
+					'callbackID': event.callbackID
+				});
 			} else {
 				worker.postMessage({ 'status': 'unrecognized request type' });
 			}

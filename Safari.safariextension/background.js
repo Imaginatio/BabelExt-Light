@@ -22,7 +22,10 @@
 
 	function xmlhttpRequest(page, request) {
 		new XHR(request, function(response) {
-			callCallback(page, { 'callbackID': request.callbackID, 'data': response });
+			callCallback(page, {
+				'callbackID': request.callbackID,
+				'data': response
+			});
 		});
 	}
 
@@ -32,7 +35,9 @@
 			xmlhttpRequest(page, event.message);
 		} else if (event.name === 'extensionReady') {
 			appendStylesheets(page);
-			callCallback(page, { 'callbackID': event.message.callbackID });
+			callCallback(page, {
+				'callbackID': event.message.callbackID
+			});
 		} else {
 			page.dispatchMessage(event.name, { status: 'unrecognized request type' });
 		}

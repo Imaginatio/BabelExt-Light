@@ -9,13 +9,10 @@
 		var div = $('<div/>').text('This is BabelExtLight').addClass('babelextlight');
 
 
-		BrowserWrapper.xhr({
-			'url': 'https://api.github.com/users/roparz',
-			onload: function(response) {
-				var login = JSON.parse(response).login;
-				div.text(div.text() + ' made by ' + login);
-				div.appendTo(document.body);
-			}
+		BrowserWrapper.get('https://api.github.com/users/roparz', function(response) {
+			var login = JSON.parse(response).login;
+			div.text(div.text() + ' made by ' + login);
+			div.appendTo(document.body);
 		});
 	}
 

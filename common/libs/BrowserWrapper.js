@@ -9,11 +9,11 @@ var BrowserWrapper = (function(win, XHR) {
 	'use strict';
 
 	var extensionContext = true,
-		bgMessage = function() {},
+		_bgMessage = function() {},
 		callbackQueue = { count: 0, onloads: [] };
 
 
-	function queueCallback(thisJSON, callback) {
+	function _queueCallback(thisJSON, callback) {
 		if (typeof callback === 'function') {
 			thisJSON.callbackID = callbackQueue.count;
 			callbackQueue.onloads[callbackQueue.count] = callback;
@@ -31,12 +31,39 @@ var BrowserWrapper = (function(win, XHR) {
 		(win.document.getElementsByTagName('head')[0] || win.document.body).appendChild(link);
 	}
 
-	function onMessage(event) {
+	function _onMessage(event) {
 		if (event.name === 'callCallback') {
 			callbackQueue.onloads[event.callbackID](event.data);
+			callbackQueue.onloads[event.callbackID] = null;
 		} else if (event.name === 'appendStylesheet') {
 			appendStylesheet(event.href);
 		}
+	}
+
+	function _xhr(obj) {
+		var crossDomain = (obj.url.indexOf(win.location.hostname) === -1);
+		// If we are in an extension context
+		if (extensionContext && crossDomain) {
+			obj.name = 'xmlhttpRequest';
+			// Then we make the xmlHttpRequest by the extension background
+			// This method prevent from crossdomains restrictions
+			_bgMessage(obj, obj.onload);
+		} else {
+			return new XHR(obj, obj.onload, obj.onerror);
+		}
+	}
+
+
+	function _get(url, callback) {
+		_xhr({ 'url': url, 'method': 'GET', onload: function(response) {
+			callback(JSON.parse(response));
+		}});
+	}
+
+	function _post(url, data, callback) {
+		_xhr({ 'url': url, 'data': data, 'method': 'POST', onload: function(response) {
+			callback(JSON.parse(response));
+		}});
 	}
 
 
@@ -49,71 +76,52 @@ var BrowserWrapper = (function(win, XHR) {
 				return;
 			}
 
+			var browser;
+
 			// Firefox
 			if (typeof(win.self.on) !== 'undefined') {
-				bgMessage = function(thisJSON, callback) {
-					win.self.postMessage(queueCallback(thisJSON, callback));
+				browser = 'firefox';
+				_bgMessage = function(thisJSON, callback) {
+					win.self.postMessage(_queueCallback(thisJSON, callback));
 				};
-				win.self.on('message', onMessage);
+				win.self.on('message', _onMessage);
 
 			// Chrome
 			} else if (typeof(win.chrome) !== 'undefined') {
-				bgMessage = function(thisJSON, callback) {
+				browser = 'chrome';
+				_bgMessage = function(thisJSON, callback) {
 					win.chrome.extension.sendRequest(thisJSON, callback);
 				};
 			// Opera
-			/*	OPERA IS NOT SUPPORTED YET
+			/*  WE DON'T SUPPORT OPERA YET
 			} else if (typeof(win.opera) !== 'undefined') {
-				bgMessage = function(thisJSON, callback) {
-					win.opera.extension.postMessage(JSON.stringify(queueCallback(thisJSON, callback)));
+				browser = 'opera';
+				_bgMessage = function(thisJSON, callback) {
+					win.opera.extension.postMessage(JSON.stringify(_queueCallback(thisJSON, callback)));
 				};
 				win.opera.extension.addEventListener('message', function(event) {
-					onMessage(event.data);
+					_onMessage(event.data);
 				}, false);
 			*/
 			// Safari
 			} else if (typeof(win.safari) !== 'undefined') {
-				bgMessage = function(thisJSON, callback) {
-					win.safari.self.tab.dispatchMessage(thisJSON.name, queueCallback(thisJSON, callback));
+				browser = 'safari';
+				_bgMessage = function(thisJSON, callback) {
+					win.safari.self.tab.dispatchMessage(thisJSON.name, _queueCallback(thisJSON, callback));
 				};
 				win.safari.self.addEventListener('message', function(event) {
-					onMessage(event.message);
+					_onMessage(event.message);
 				}, false);
 
 			}
 
-			bgMessage({ 'name': 'extensionReady' }, callback);
+			_bgMessage({ 'name': 'extensionReady' }, function() {
+				callback(browser);
+			});
 		},
-		xhr: function(obj) {
-			var crossDomain = (obj.url.indexOf(win.location.hostname) === -1);
-			// If we are in an extension context
-			if (extensionContext && crossDomain) {
-				obj.name = 'xmlhttpRequest';
-				// Then we make the xmlHttpRequest by the extension background
-				// This method prevent from crossdomains restrictions
-				bgMessage(obj, obj.onload);
-			} else {
-				return new XHR(obj, obj.onload, obj.onerror);
-			}
-		}
+		'xhr': _xhr,
+		'get': _get,
+		'post': _post
 	};
 
 })(win, XHR);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
